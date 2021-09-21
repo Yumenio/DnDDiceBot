@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftplusminusnonassocadvdisadvadv cpar dice disadv minus newline number opar plus space tabcommand : roll_listroll_list : roll\n                    | roll roll_list\n         roll : number dice mod_list\n                    | dice mod_list\n                    | dice\n         mod_list : mod\n                        | mod mod_list\n         mod : plus number\n                        | minus number\n                        | adv\n                        | disadv\n        '
+_lr_signature = 'leftplusminusnonassocadvdisadvadv cpar dice disadv minus newline number opar plus space tabcommand : roll_listroll_list : roll\n                    | roll roll_list\n         roll : number dice mod_list\n                    | number dice\n                    | dice mod_list\n                    | dice\n         mod_list : mod\n                        | mod mod_list\n         mod : plus number\n                        | minus number\n                        | adv\n                        | disadv\n        '
     
-_lr_action_items = {'number':([0,3,5,8,9,10,11,12,13,14,15,16,17,],[4,4,-6,-5,-7,16,17,-11,-12,-4,-8,-9,-10,]),'dice':([0,3,4,5,8,9,12,13,14,15,16,17,],[5,5,7,-6,-5,-7,-11,-12,-4,-8,-9,-10,]),'$end':([1,2,3,5,6,8,9,12,13,14,15,16,17,],[0,-1,-2,-6,-3,-5,-7,-11,-12,-4,-8,-9,-10,]),'plus':([5,7,9,12,13,16,17,],[10,10,10,-11,-12,-9,-10,]),'minus':([5,7,9,12,13,16,17,],[11,11,11,-11,-12,-9,-10,]),'adv':([5,7,9,12,13,16,17,],[12,12,12,-11,-12,-9,-10,]),'disadv':([5,7,9,12,13,16,17,],[13,13,13,-11,-12,-9,-10,]),}
+_lr_action_items = {'number':([0,3,5,7,8,9,10,11,12,13,14,15,16,17,],[4,4,-7,-5,-6,-8,16,17,-12,-13,-4,-9,-10,-11,]),'dice':([0,3,4,5,7,8,9,12,13,14,15,16,17,],[5,5,7,-7,-5,-6,-8,-12,-13,-4,-9,-10,-11,]),'$end':([1,2,3,5,6,7,8,9,12,13,14,15,16,17,],[0,-1,-2,-7,-3,-5,-6,-8,-12,-13,-4,-9,-10,-11,]),'plus':([5,7,9,12,13,16,17,],[10,10,10,-12,-13,-10,-11,]),'minus':([5,7,9,12,13,16,17,],[11,11,11,-12,-13,-10,-11,]),'adv':([5,7,9,12,13,16,17,],[12,12,12,-12,-13,-10,-11,]),'disadv':([5,7,9,12,13,16,17,],[13,13,13,-12,-13,-10,-11,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -31,12 +31,13 @@ _lr_productions = [
   ('roll_list -> roll','roll_list',1,'p_roll_list','parser.py',32),
   ('roll_list -> roll roll_list','roll_list',2,'p_roll_list','parser.py',33),
   ('roll -> number dice mod_list','roll',3,'p_roll','parser.py',41),
-  ('roll -> dice mod_list','roll',2,'p_roll','parser.py',42),
-  ('roll -> dice','roll',1,'p_roll','parser.py',43),
-  ('mod_list -> mod','mod_list',1,'p_mod_list','parser.py',54),
-  ('mod_list -> mod mod_list','mod_list',2,'p_mod_list','parser.py',55),
-  ('mod -> plus number','mod',2,'p_mod','parser.py',63),
-  ('mod -> minus number','mod',2,'p_mod','parser.py',64),
-  ('mod -> adv','mod',1,'p_mod','parser.py',65),
-  ('mod -> disadv','mod',1,'p_mod','parser.py',66),
+  ('roll -> number dice','roll',2,'p_roll','parser.py',42),
+  ('roll -> dice mod_list','roll',2,'p_roll','parser.py',43),
+  ('roll -> dice','roll',1,'p_roll','parser.py',44),
+  ('mod_list -> mod','mod_list',1,'p_mod_list','parser.py',55),
+  ('mod_list -> mod mod_list','mod_list',2,'p_mod_list','parser.py',56),
+  ('mod -> plus number','mod',2,'p_mod','parser.py',64),
+  ('mod -> minus number','mod',2,'p_mod','parser.py',65),
+  ('mod -> adv','mod',1,'p_mod','parser.py',66),
+  ('mod -> disadv','mod',1,'p_mod','parser.py',67),
 ]

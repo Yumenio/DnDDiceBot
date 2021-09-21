@@ -39,13 +39,17 @@ class DiceParser:
 
     def p_roll(p):
         ''' roll : number dice mod_list
+                    | number dice
                     | dice mod_list
                     | dice
         '''
         if len(p) == 4:
             p[0] = RollNode(p[2], p[3], p[1])
         elif len(p) == 3:
-            p[0] = RollNode(p[1], p[2])
+            if not isinstance(p[1], int):
+                p[0] = RollNode(p[1], p[2])
+            else:
+                p[0] = RollNode(p[2], [], p[1])
         else:
             p[0] = RollNode(p[1], [])
         p[0].token_list = [sl for sl in p.slice if type(lt.LexToken()) == type(sl)]

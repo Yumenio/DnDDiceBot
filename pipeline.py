@@ -1,5 +1,6 @@
 from grammar.lexer import DiceLexer
 from grammar.parser import DiceParser
+from grammar.executor import Executor
 
 class Pipeline:
     def __init__(self, data : str, verbose=False):
@@ -15,10 +16,17 @@ class Pipeline:
             self.lexer = DiceLexer()
 
         self.ast = self.parser.parse(self.lexer, self.data)
+        self.executor = Executor()
+        self.executor.visit(self.ast)
+        a = 0
 
+    def getAnswer(self):
+        return self.executor.rolls
 
 if __name__ == '__main__':
-    data = 'd4+3! 3d20!+6'
+    # data = 'd4+3! 3d20!+6'
+    data = '20d8!'
     verbose = True
 
-    Pipeline(data, verbose)
+    pipeline = Pipeline(data, verbose)
+    print(pipeline.getAnswer())
