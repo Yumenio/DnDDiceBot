@@ -24,9 +24,17 @@ class DiceParser:
         return (token.lexpos - line_start) + 1  
     
     def p_command(p):
-        'command : roll_list'
-        p[0] = CommandNode(p[1])
-        p[0].token_list = [sl for sl in p.slice if type(lt.LexToken()) == type(sl)]
+        '''command : roll_list
+                        | mod_list
+                        |
+        '''
+        if len(p) == 1:
+            p[0] = CommandNode( [RollNode('d20', [])])
+        elif isinstance(p[1][0], RollNode):
+            p[0] = CommandNode(p[1])
+            p[0].token_list = [sl for sl in p.slice if type(lt.LexToken()) == type(sl)]
+        else:
+            p[0] = CommandNode( [RollNode('d20', p[1])])
 
     def p_roll_list(p):
         '''roll_list : roll
@@ -66,6 +74,7 @@ class DiceParser:
     def p_mod(p):
         ''' mod : plus number
                         | minus number
+                        | star number
                         | adv
                         | disadv
         '''
@@ -76,6 +85,8 @@ class DiceParser:
             p[0] = PlusNode(p[2])
         elif p[1] == '-':
             p[0] = MinusNode(p[2])
+        elif p[1] == '*':
+            p[0] = StarNode(p[2])
         elif p[1] == '!':
             p[0] = AdvantageNode()
         elif p[1] == '?':

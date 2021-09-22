@@ -5,10 +5,9 @@ reserved = {}
 _tokens = [
     'space',
     'number',
-    'opar',
-    'cpar',
     'plus',
     'minus',
+    'star',
     'tab',
     'newline',
     'adv',
@@ -85,35 +84,36 @@ class DiceLexer:
         t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
         return t
 
-    # t_opar = r'\('
     def t_opar(self, t):
         r'\('
         t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
         return t
-    # t_cpar = r'\)'
+    
     def t_cpar(self, t):
         r'\)'
         t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
         return t
 
-    # t_plus = r'\+'
     def t_plus(self,t):
         r'\+'
         t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
         return t
 
-    # t_minus = r'\-'
     def t_minus(self,t):
         r'\-'
         t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
         return t
     
-    # t_star = r'\*'
+    def t_star(self,t):
+        r'\*'
+        t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
+        return t
+
     def t_adv(self,t):
         r'\!'
         t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
         return t
-    # t_div = r'/'
+        
     def t_disadv(self,t):
         r'\?'
         t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
@@ -146,7 +146,7 @@ class DiceLexer:
         #     else:
         #         self.errors.append(LexicographicError % (row, col, f'Unterminated string constant'))
         # else:
-        self.errors.append(_LexicographicError % (t.lexer.lineno, self.find_column(t.lexer.lexdata,t), f'ERROR "{t.value[0]}"'))
+        # self.errors.append(_LexicographicError % (t.lexer.lineno, self.find_column(t.lexer.lexdata,t), f'ERROR "{t.value[0]}"'))
         # print(LexicographicError % (t.lexer.lineno, self.find_column(t.lexer.lexdata,t), f'ERROR "{t.value[0]}"'))
         t.lexer.skip(1)
 

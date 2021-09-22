@@ -20,13 +20,26 @@ class Pipeline:
         self.executor.visit(self.ast)
         a = 0
 
-    def getAnswer(self):
+    def getString(self):
         return self.executor.rolls
+    def getDices(self):
+        return self.executor.data
+    def getResult(self):
+        data = self.getDices()
+        acc = 0
+        for rolls in data:
+            for roll in rolls:
+                if not isinstance(roll, int):
+                    l,r,case = roll
+                    acc += max(l,r) if case=='!' else min(l,r)
+                else:
+                    acc += roll
+        return max(0,acc)
 
 if __name__ == '__main__':
-    # data = 'd4+3! 3d20!+6'
-    data = '20d8!'
-    verbose = True
+    data = '*6'
+    # data = '2d8 + 3 - 4! 2d20?+6'
+    verbose = False
 
     pipeline = Pipeline(data, verbose)
-    print(pipeline.getAnswer())
+    print(pipeline.getString() + '  =   ' + str(pipeline.getResult()))
