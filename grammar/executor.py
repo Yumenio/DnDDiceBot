@@ -31,6 +31,7 @@ class Executor:
         adv = sum([1 if isinstance(i, AdvantageNode) else 0 for i in node.mod_list])
         disadv = sum([1 if isinstance(i, DisadvantageNode) else 0 for i in node.mod_list])
         global_modifier = sum([ i.num for i in node.mod_list if isinstance(i, StarNode)])
+        global_modifier -= sum([ i.num for i in node.mod_list if isinstance(i, DivNode)])
 
         if adv and disadv:
             raise SemanticError('Advantage and disadvantage cancel each other')
@@ -44,7 +45,7 @@ class Executor:
         for i in range(num_dices):
             roll = randint(1,dice_value)+global_modifier if not adv + disadv else (randint(1,dice_value)+global_modifier, randint(1,dice_value)+global_modifier, '!' if adv else '?')
             current_roll_list.append(roll)
-            self.rolls += format(roll, dice_value+global_modifier )
+            self.rolls += format(roll, dice_value, global_modifier )
             self.rolls += ', '
         else:
             self.rolls = self.rolls[:-2]
@@ -62,18 +63,19 @@ class Executor:
     def visit(self, node):
         return int(node.number)
 
-def format(roll, maxvalue = 20):
+def format(roll, maxvalue = 20, global_mod = 0):
     if isinstance(roll, int):
-        if roll == 1:
+        print(roll-maxvalue)
+        if roll == 1 + global_mod:
             return '<b>' + str(roll) + '</b>'
-        elif roll == maxvalue:
+        elif roll == maxvalue+global_mod:
             return '<b>' + str(roll) + '</b>'
         else:
             return str(roll)
     
     else:   #[dis]advantageous case
-        l_roll = format(roll[0], maxvalue)
-        r_roll = format(roll[1], maxvalue)
+        l_roll = format(roll[0], maxvalue, global_mod)
+        r_roll = format(roll[1], maxvalue, global_mod)
         # return '(' + l_roll + ',' + r_roll + ')'
         case = roll[2]
         if case == '!':

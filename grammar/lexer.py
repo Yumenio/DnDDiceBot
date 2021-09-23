@@ -8,6 +8,7 @@ _tokens = [
     'plus',
     'minus',
     'star',
+    'div',
     'tab',
     'newline',
     'adv',
@@ -106,6 +107,11 @@ class DiceLexer:
     
     def t_star(self,t):
         r'\*'
+        t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
+        return t
+
+    def t_div(self,t):
+        r'/'
         t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
         return t
 

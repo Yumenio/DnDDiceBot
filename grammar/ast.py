@@ -30,6 +30,9 @@ class MinusNode(Node):
 class StarNode(Node):
     def __init__(self, num):
         self.num = num
+class DivNode(Node):
+    def __init__(self, num):
+        self.num = num
 
 class NumNode(Node):
     pass

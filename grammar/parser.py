@@ -75,6 +75,7 @@ class DiceParser:
         ''' mod : plus number
                         | minus number
                         | star number
+                        | div number
                         | adv
                         | disadv
         '''
@@ -87,6 +88,8 @@ class DiceParser:
             p[0] = MinusNode(p[2])
         elif p[1] == '*':
             p[0] = StarNode(p[2])
+        elif p[1] == '/':
+            p[0] = DivNode(p[2])
         elif p[1] == '!':
             p[0] = AdvantageNode()
         elif p[1] == '?':
@@ -112,9 +115,12 @@ class DiceParser:
 
         token_column = find_column(p.lexer.lexdata, p)
         # errors.append(_SyntacticError % (p.lineno, token_column, p.value))
-        SyntacticError = '(%d, %d) - SyntacticError: ERROR at or near "%s"'
-        print(SyntacticError % (p.lineno, token_column, p.value))
+        _syntacticError = '(%d, %d) - SyntacticError: ERROR at or near "%s"'
+        raise SyntacticError( _syntacticError % (p.lineno, token_column, p.value) )
         # print(f'({p.lineno}, {token_column}) - SyntacticError: ERROR at or near "{p.value}"')
         
 
     parser = yacc.yacc(debug = True)
+
+class SyntacticError(Exception):
+    pass

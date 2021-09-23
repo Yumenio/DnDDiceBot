@@ -37,7 +37,7 @@ class Pipeline:
         return max(0,acc)
 
 if __name__ == '__main__':
-    data = '*6'
+    data = '10d20'
     # data = '2d8 + 3 - 4! 2d20?+6'
     verbose = False
 
