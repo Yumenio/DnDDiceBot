@@ -1,6 +1,7 @@
 from grammar.lexer import DiceLexer
 from grammar.lexer import _tokens
 from grammar.ast import *
+from utils import SyntacticError
 import ply.yacc as yacc
 import ply.lex as lt
 tokens = _tokens
@@ -121,6 +122,3 @@ class DiceParser:
         
 
     parser = yacc.yacc(debug = True)
-
-class SyntacticError(Exception):
-    pass

@@ -5,7 +5,7 @@ from telepot.loop import MessageLoop
 from pipeline import Pipeline
 from grammar.parser import SyntacticError
 from grammar.executor import SemanticError
-from whitelist import WHITELIST, help_message
+from utils import WHITELIST, help_message
 import time
 
 def handle(msg):

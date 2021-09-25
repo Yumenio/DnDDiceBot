@@ -18,3 +18,9 @@ WHITELIST = [
     564213106,
     -1001454846017
 ]
+
+class SyntacticError(Exception):
+    pass
+
+class SemanticError(Exception):
+    pass

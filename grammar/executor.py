@@ -1,9 +1,7 @@
 from grammar.ast import *
 import grammar.visitor as visitor
 from random import randint
-
-class SemanticError(Exception):
-    pass
+from utils import SemanticError
 
 class Executor:
     def __init__(self):
@@ -30,8 +28,8 @@ class Executor:
         dice_value = int(node.dice[1:])
         adv = sum([1 if isinstance(i, AdvantageNode) else 0 for i in node.mod_list])
         disadv = sum([1 if isinstance(i, DisadvantageNode) else 0 for i in node.mod_list])
-        global_modifier = sum([ i.num for i in node.mod_list if isinstance(i, StarNode)])
-        global_modifier -= sum([ i.num for i in node.mod_list if isinstance(i, DivNode)])
+        global_modifier = sum([ i.num for i in node.mod_list if isinstance(i, StarNode) and i.num<21])
+        global_modifier -= sum([ i.num for i in node.mod_list if isinstance(i, DivNode)] and i.num<21)
 
         if adv and disadv:
             raise SemanticError('Advantage and disadvantage cancel each other')
