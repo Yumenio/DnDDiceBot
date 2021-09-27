@@ -3,8 +3,7 @@ from grammar.parser import DiceParser
 from grammar.executor import Executor
 
 class Pipeline:
-    def __init__(self, data : str, verbose=False):
-        self.data = data
+    def __init__(self, verbose=False):
         self.lexer = DiceLexer()
         self.parser = DiceParser()
         self.verbose = verbose
@@ -15,10 +14,15 @@ class Pipeline:
             self.tokens = self.lexer.input(self.data)
             self.lexer = DiceLexer()
 
-        self.ast = self.parser.parse(self.lexer, self.data)
+        # self.ast = self.parser.parse(self.lexer, self.data)
+        # self.executor = Executor()
+        # self.executor.visit(self.ast)
+
+    def execute(self, data: str):
+        self.ast = self.parser.parse(self.lexer, data)
         self.executor = Executor()
         self.executor.visit(self.ast)
-        a = 0
+        return self.getString(), self.getResult()
 
     def getString(self):
         return self.executor.rolls

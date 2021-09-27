@@ -31,7 +31,7 @@ def handle(msg):
         print('query: ' + command)
         verbose = False
         try:
-            pipeline = Pipeline(command[3:], verbose)
+            pipeline = Pipeline(command[2:], verbose)
             ans = pipeline.getString() + 'total =   ' + str(pipeline.getResult())
             print(ans)
             bot.sendMessage(chat_id, ans, parse_mode = 'HTML', reply_to_message_id=mssg_id)

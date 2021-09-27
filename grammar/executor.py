@@ -29,7 +29,7 @@ class Executor:
         adv = sum([1 if isinstance(i, AdvantageNode) else 0 for i in node.mod_list])
         disadv = sum([1 if isinstance(i, DisadvantageNode) else 0 for i in node.mod_list])
         global_modifier = sum([ i.num for i in node.mod_list if isinstance(i, StarNode) and i.num<21])
-        global_modifier -= sum([ i.num for i in node.mod_list if isinstance(i, DivNode)] and i.num<21)
+        global_modifier -= sum([ j.num for j in node.mod_list if isinstance(j, DivNode) and j.num<21])
 
         if adv and disadv:
             raise SemanticError('Advantage and disadvantage cancel each other')
@@ -63,11 +63,14 @@ class Executor:
 
 def format(roll, maxvalue = 20, global_mod = 0):
     if isinstance(roll, int):
-        print(roll-maxvalue)
+        # natural one
         if roll == 1 + global_mod:
             return '<b>' + str(roll) + '</b>'
+        
+        # natural twenty
         elif roll == maxvalue+global_mod:
             return '<b>' + str(roll) + '</b>'
+        
         else:
             return str(roll)
     
