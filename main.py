@@ -32,11 +32,11 @@ def handle(update, context):
 
     # debugging the time
     # print('currentTime: ', time.time())
-    # print('mssgTime:', msg['date'].now().timestamp())
+    # print('mssgTime:', msg['date'].timestamp())
 
-    if chat_id not in WHITELIST or time.time() - 120 > msg['date'].now().timestamp():
+    if chat_id not in WHITELIST or time.time() - 120 > msg['date'].timestamp():
         return
-        
+
     # pprint.pprint(msg)
     if command[:2] == '/d':
         print('query: ' + command)
@@ -64,13 +64,14 @@ def error(update, context):
 
 def main():
     """Start the bot."""
-    # Create the Updater and pass it your bot's token.
-    # Make sure to set use_context=True to use the new context based callbacks
-    # Post version 12 this will no longer be necessary
     token = ''
     with open('./token.txt') as f:
         token = f.read()
+    # bot = Bot(token= token)
+    # bot.setWebhook('https://bokunodice.herokuapp.com/'+token)
     updater = Updater(token)
+    # port = os.getenv('PORT', default = 8443)
+    # print('binding to port:',port)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -86,6 +87,7 @@ def main():
     dp.add_error_handler(error)
 
     # Start the Bot
+    # updater.start_webhook(url_path='https://bokunodice.herokuapp.com/'+token , port=port)
     updater.start_polling()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
