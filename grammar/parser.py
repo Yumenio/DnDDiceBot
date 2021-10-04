@@ -51,16 +51,23 @@ class DiceParser:
                     | number dice
                     | dice mod_list
                     | dice
+                    | number
+                    | number mod_list
         '''
         if len(p) == 4:
             p[0] = RollNode(p[2], p[3], p[1])
         elif len(p) == 3:
-            if not isinstance(p[1], int):
+            if not isinstance(p[1], int):   # dice mod_list case
                 p[0] = RollNode(p[1], p[2])
-            else:
+            elif isinstance(p[2], list):    # number mod_list case
+                p[0] = RollNode('d'+str(p[1]),p[2])
+            else:   # number dice case
                 p[0] = RollNode(p[2], [], p[1])
         else:
-            p[0] = RollNode(p[1], [])
+            if isinstance(p[1], int):   #number case
+                p[0] = RollNode('d'+str(p[1]),[])
+            else:   # dice case
+                p[0] = RollNode(p[1], [])
         p[0].token_list = [sl for sl in p.slice if type(lt.LexToken()) == type(sl)]
 
     def p_mod_list(p):

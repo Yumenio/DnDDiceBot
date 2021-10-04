@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftplusminusnonassocadvdisadvadv dice disadv div minus newline number plus space star tabcommand : roll_list\n                        | mod_list\n                        |\n        roll_list : roll\n                    | roll roll_list\n         roll : number dice mod_list\n                    | number dice\n                    | dice mod_list\n                    | dice\n         mod_list : mod\n                        | mod mod_list\n         mod : plus number\n                        | minus number\n                        | star number\n                        | div number\n                        | adv\n                        | disadv\n        '
+_lr_signature = 'leftplusminusnonassocadvdisadvadv dice disadv div minus newline number plus space star tabcommand : roll_list\n                        | mod_list\n                        |\n        roll_list : roll\n                    | roll roll_list\n         roll : number dice mod_list\n                    | number dice\n                    | dice mod_list\n                    | dice\n                    | number\n                    | number mod_list\n         mod_list : mod\n                        | mod mod_list\n         mod : plus number\n                        | minus number\n                        | star number\n                        | div number\n                        | adv\n                        | disadv\n        '
     
-_lr_action_items = {'$end':([0,1,2,3,4,5,7,12,13,14,15,16,17,18,19,20,21,22,],[-3,0,-1,-2,-4,-10,-9,-16,-17,-5,-11,-7,-8,-12,-13,-14,-15,-6,]),'number':([0,4,5,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,],[6,6,-10,-9,18,19,20,21,-16,-17,-11,-7,-8,-12,-13,-14,-15,-6,]),'dice':([0,4,5,6,7,12,13,15,16,17,18,19,20,21,22,],[7,7,-10,16,-9,-16,-17,-11,-7,-8,-12,-13,-14,-15,-6,]),'plus':([0,5,7,12,13,16,18,19,20,21,],[8,8,8,-16,-17,8,-12,-13,-14,-15,]),'minus':([0,5,7,12,13,16,18,19,20,21,],[9,9,9,-16,-17,9,-12,-13,-14,-15,]),'star':([0,5,7,12,13,16,18,19,20,21,],[10,10,10,-16,-17,10,-12,-13,-14,-15,]),'div':([0,5,7,12,13,16,18,19,20,21,],[11,11,11,-16,-17,11,-12,-13,-14,-15,]),'adv':([0,5,7,12,13,16,18,19,20,21,],[12,12,12,-16,-17,12,-12,-13,-14,-15,]),'disadv':([0,5,7,12,13,16,18,19,20,21,],[13,13,13,-16,-17,13,-12,-13,-14,-15,]),}
+_lr_action_items = {'$end':([0,1,2,3,4,5,6,7,12,13,14,15,16,17,18,19,20,21,22,23,],[-3,0,-1,-2,-4,-12,-10,-9,-18,-19,-5,-13,-7,-11,-8,-14,-15,-16,-17,-6,]),'number':([0,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,],[6,6,-12,-10,-9,19,20,21,22,-18,-19,-13,-7,-11,-8,-14,-15,-16,-17,-6,]),'dice':([0,4,5,6,7,12,13,15,16,17,18,19,20,21,22,23,],[7,7,-12,16,-9,-18,-19,-13,-7,-11,-8,-14,-15,-16,-17,-6,]),'plus':([0,5,6,7,12,13,16,19,20,21,22,],[8,8,8,8,-18,-19,8,-14,-15,-16,-17,]),'minus':([0,5,6,7,12,13,16,19,20,21,22,],[9,9,9,9,-18,-19,9,-14,-15,-16,-17,]),'star':([0,5,6,7,12,13,16,19,20,21,22,],[10,10,10,10,-18,-19,10,-14,-15,-16,-17,]),'div':([0,5,6,7,12,13,16,19,20,21,22,],[11,11,11,11,-18,-19,11,-14,-15,-16,-17,]),'adv':([0,5,6,7,12,13,16,19,20,21,22,],[12,12,12,12,-18,-19,12,-14,-15,-16,-17,]),'disadv':([0,5,6,7,12,13,16,19,20,21,22,],[13,13,13,13,-18,-19,13,-14,-15,-16,-17,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'command':([0,],[1,]),'roll_list':([0,4,],[2,14,]),'mod_list':([0,5,7,16,],[3,15,17,22,]),'roll':([0,4,],[4,4,]),'mod':([0,5,7,16,],[5,5,5,5,]),}
+_lr_goto_items = {'command':([0,],[1,]),'roll_list':([0,4,],[2,14,]),'mod_list':([0,5,6,7,16,],[3,15,17,18,23,]),'roll':([0,4,],[4,4,]),'mod':([0,5,6,7,16,],[5,5,5,5,5,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,21 +27,23 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> command","S'",1,None,None,None),
-  ('command -> roll_list','command',1,'p_command','parser.py',27),
-  ('command -> mod_list','command',1,'p_command','parser.py',28),
-  ('command -> <empty>','command',0,'p_command','parser.py',29),
-  ('roll_list -> roll','roll_list',1,'p_roll_list','parser.py',40),
-  ('roll_list -> roll roll_list','roll_list',2,'p_roll_list','parser.py',41),
-  ('roll -> number dice mod_list','roll',3,'p_roll','parser.py',49),
-  ('roll -> number dice','roll',2,'p_roll','parser.py',50),
-  ('roll -> dice mod_list','roll',2,'p_roll','parser.py',51),
-  ('roll -> dice','roll',1,'p_roll','parser.py',52),
-  ('mod_list -> mod','mod_list',1,'p_mod_list','parser.py',66),
-  ('mod_list -> mod mod_list','mod_list',2,'p_mod_list','parser.py',67),
-  ('mod -> plus number','mod',2,'p_mod','parser.py',75),
-  ('mod -> minus number','mod',2,'p_mod','parser.py',76),
-  ('mod -> star number','mod',2,'p_mod','parser.py',77),
-  ('mod -> div number','mod',2,'p_mod','parser.py',78),
-  ('mod -> adv','mod',1,'p_mod','parser.py',79),
-  ('mod -> disadv','mod',1,'p_mod','parser.py',80),
+  ('command -> roll_list','command',1,'p_command','parser.py',28),
+  ('command -> mod_list','command',1,'p_command','parser.py',29),
+  ('command -> <empty>','command',0,'p_command','parser.py',30),
+  ('roll_list -> roll','roll_list',1,'p_roll_list','parser.py',41),
+  ('roll_list -> roll roll_list','roll_list',2,'p_roll_list','parser.py',42),
+  ('roll -> number dice mod_list','roll',3,'p_roll','parser.py',50),
+  ('roll -> number dice','roll',2,'p_roll','parser.py',51),
+  ('roll -> dice mod_list','roll',2,'p_roll','parser.py',52),
+  ('roll -> dice','roll',1,'p_roll','parser.py',53),
+  ('roll -> number','roll',1,'p_roll','parser.py',54),
+  ('roll -> number mod_list','roll',2,'p_roll','parser.py',55),
+  ('mod_list -> mod','mod_list',1,'p_mod_list','parser.py',71),
+  ('mod_list -> mod mod_list','mod_list',2,'p_mod_list','parser.py',72),
+  ('mod -> plus number','mod',2,'p_mod','parser.py',80),
+  ('mod -> minus number','mod',2,'p_mod','parser.py',81),
+  ('mod -> star number','mod',2,'p_mod','parser.py',82),
+  ('mod -> div number','mod',2,'p_mod','parser.py',83),
+  ('mod -> adv','mod',1,'p_mod','parser.py',84),
+  ('mod -> disadv','mod',1,'p_mod','parser.py',85),
 ]

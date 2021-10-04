@@ -41,9 +41,10 @@ class Pipeline:
         return max(0,acc)
 
 if __name__ == '__main__':
-    data = '10d20'
+    data = '10!+3 d20?-1'
     # data = '2d8 + 3 - 4! 2d20?+6'
     verbose = False
 
-    pipeline = Pipeline(data, verbose)
+    pipeline = Pipeline(verbose)
+    pipeline.execute(data)
     print(pipeline.getString() + '  =   ' + str(pipeline.getResult()))

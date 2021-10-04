@@ -16,7 +16,10 @@ def start(update, context):
 
 def aiuda(update, context):
     """Send a message when the command /aiuda is issued."""
-    update.message.reply_text(help_message)
+    msg = update.message
+    chat_id = msg['chat']['id']
+    mssg_id = msg['message_id']
+    update.message.bot.sendMessage(chat_id, help_message, parse_mode = 'HTML', reply_to_message_id=mssg_id)
 
 
 def handle(update, context):
@@ -27,8 +30,9 @@ def handle(update, context):
     mssg_id = msg['message_id']
     verbose = False
     pipeline = Pipeline(verbose)
-    if msg['reply_to_message'] or msg['edit_date']:
-        return
+    # if msg['reply_to_message'] or msg['edit_date']:
+    # if msg['edit_date']:
+    #    return
 
     # debugging the time
     # print('currentTime: ', time.time())
@@ -52,12 +56,11 @@ def handle(update, context):
         except Exception as err:
             update.message.bot.sendMessage(chat_id, 'whoops, something went wrong, check the /aiuda command if you need help', reply_to_message_id=mssg_id)
             print(err)
-    elif command[:6] == '/aiuda':
-        update.message.bot.sendMessage(chat_id, help_message, parse_mode='HTML', reply_to_message_id=mssg_id)
+    # elif command[:6] == '/aiuda':
+    #     help_message = "e.g.:    d d20!+5 [(<u>19</u>,18)] = 24"
+    #     update.message.bot.sendMessage(chat_id, help_message, parse_mode = 'HTML', reply_to_message_id=mssg_id)
     
     return
-    # update.message.reply_text(update.message.text)
-
 
 def error(update, context):
     print('Update "%s" caused error "%s"', update, context.error)

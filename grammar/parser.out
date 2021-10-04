@@ -18,35 +18,37 @@ Rule 6     roll -> number dice mod_list
 Rule 7     roll -> number dice
 Rule 8     roll -> dice mod_list
 Rule 9     roll -> dice
-Rule 10    mod_list -> mod
-Rule 11    mod_list -> mod mod_list
-Rule 12    mod -> plus number
-Rule 13    mod -> minus number
-Rule 14    mod -> star number
-Rule 15    mod -> div number
-Rule 16    mod -> adv
-Rule 17    mod -> disadv
+Rule 10    roll -> number
+Rule 11    roll -> number mod_list
+Rule 12    mod_list -> mod
+Rule 13    mod_list -> mod mod_list
+Rule 14    mod -> plus number
+Rule 15    mod -> minus number
+Rule 16    mod -> star number
+Rule 17    mod -> div number
+Rule 18    mod -> adv
+Rule 19    mod -> disadv
 
 Terminals, with rules where they appear
 
-adv                  : 16
+adv                  : 18
 dice                 : 6 7 8 9
-disadv               : 17
-div                  : 15
+disadv               : 19
+div                  : 17
 error                : 
-minus                : 13
+minus                : 15
 newline              : 
-number               : 6 7 12 13 14 15
-plus                 : 12
+number               : 6 7 10 11 14 15 16 17
+plus                 : 14
 space                : 
-star                 : 14
+star                 : 16
 tab                  : 
 
 Nonterminals, with rules where they appear
 
 command              : 0
-mod                  : 10 11
-mod_list             : 2 6 8 11
+mod                  : 12 13
+mod_list             : 2 6 8 11 13
 roll                 : 4 5
 roll_list            : 1 5
 
@@ -60,18 +62,20 @@ state 0
     (3) command -> .
     (4) roll_list -> . roll
     (5) roll_list -> . roll roll_list
-    (10) mod_list -> . mod
-    (11) mod_list -> . mod mod_list
+    (12) mod_list -> . mod
+    (13) mod_list -> . mod mod_list
     (6) roll -> . number dice mod_list
     (7) roll -> . number dice
     (8) roll -> . dice mod_list
     (9) roll -> . dice
-    (12) mod -> . plus number
-    (13) mod -> . minus number
-    (14) mod -> . star number
-    (15) mod -> . div number
-    (16) mod -> . adv
-    (17) mod -> . disadv
+    (10) roll -> . number
+    (11) roll -> . number mod_list
+    (14) mod -> . plus number
+    (15) mod -> . minus number
+    (16) mod -> . star number
+    (17) mod -> . div number
+    (18) mod -> . adv
+    (19) mod -> . disadv
 
     $end            reduce using rule 3 (command -> .)
     number          shift and go to state 6
@@ -119,6 +123,8 @@ state 4
     (7) roll -> . number dice
     (8) roll -> . dice mod_list
     (9) roll -> . dice
+    (10) roll -> . number
+    (11) roll -> . number mod_list
 
     $end            reduce using rule 4 (roll_list -> roll .)
     number          shift and go to state 6
@@ -129,20 +135,20 @@ state 4
 
 state 5
 
-    (10) mod_list -> mod .
-    (11) mod_list -> mod . mod_list
-    (10) mod_list -> . mod
-    (11) mod_list -> . mod mod_list
-    (12) mod -> . plus number
-    (13) mod -> . minus number
-    (14) mod -> . star number
-    (15) mod -> . div number
-    (16) mod -> . adv
-    (17) mod -> . disadv
+    (12) mod_list -> mod .
+    (13) mod_list -> mod . mod_list
+    (12) mod_list -> . mod
+    (13) mod_list -> . mod mod_list
+    (14) mod -> . plus number
+    (15) mod -> . minus number
+    (16) mod -> . star number
+    (17) mod -> . div number
+    (18) mod -> . adv
+    (19) mod -> . disadv
 
-    $end            reduce using rule 10 (mod_list -> mod .)
-    number          reduce using rule 10 (mod_list -> mod .)
-    dice            reduce using rule 10 (mod_list -> mod .)
+    $end            reduce using rule 12 (mod_list -> mod .)
+    number          reduce using rule 12 (mod_list -> mod .)
+    dice            reduce using rule 12 (mod_list -> mod .)
     plus            shift and go to state 8
     minus           shift and go to state 9
     star            shift and go to state 10
@@ -157,22 +163,45 @@ state 6
 
     (6) roll -> number . dice mod_list
     (7) roll -> number . dice
+    (10) roll -> number .
+    (11) roll -> number . mod_list
+    (12) mod_list -> . mod
+    (13) mod_list -> . mod mod_list
+    (14) mod -> . plus number
+    (15) mod -> . minus number
+    (16) mod -> . star number
+    (17) mod -> . div number
+    (18) mod -> . adv
+    (19) mod -> . disadv
 
+  ! shift/reduce conflict for dice resolved as shift
     dice            shift and go to state 16
+    number          reduce using rule 10 (roll -> number .)
+    $end            reduce using rule 10 (roll -> number .)
+    plus            shift and go to state 8
+    minus           shift and go to state 9
+    star            shift and go to state 10
+    div             shift and go to state 11
+    adv             shift and go to state 12
+    disadv          shift and go to state 13
 
+  ! dice            [ reduce using rule 10 (roll -> number .) ]
+
+    mod_list                       shift and go to state 17
+    mod                            shift and go to state 5
 
 state 7
 
     (8) roll -> dice . mod_list
     (9) roll -> dice .
-    (10) mod_list -> . mod
-    (11) mod_list -> . mod mod_list
-    (12) mod -> . plus number
-    (13) mod -> . minus number
-    (14) mod -> . star number
-    (15) mod -> . div number
-    (16) mod -> . adv
-    (17) mod -> . disadv
+    (12) mod_list -> . mod
+    (13) mod_list -> . mod mod_list
+    (14) mod -> . plus number
+    (15) mod -> . minus number
+    (16) mod -> . star number
+    (17) mod -> . div number
+    (18) mod -> . adv
+    (19) mod -> . disadv
 
     number          reduce using rule 9 (roll -> dice .)
     dice            reduce using rule 9 (roll -> dice .)
@@ -184,65 +213,65 @@ state 7
     adv             shift and go to state 12
     disadv          shift and go to state 13
 
-    mod_list                       shift and go to state 17
+    mod_list                       shift and go to state 18
     mod                            shift and go to state 5
 
 state 8
 
-    (12) mod -> plus . number
-
-    number          shift and go to state 18
-
-
-state 9
-
-    (13) mod -> minus . number
+    (14) mod -> plus . number
 
     number          shift and go to state 19
 
 
-state 10
+state 9
 
-    (14) mod -> star . number
+    (15) mod -> minus . number
 
     number          shift and go to state 20
 
 
-state 11
+state 10
 
-    (15) mod -> div . number
+    (16) mod -> star . number
 
     number          shift and go to state 21
 
 
+state 11
+
+    (17) mod -> div . number
+
+    number          shift and go to state 22
+
+
 state 12
 
-    (16) mod -> adv .
+    (18) mod -> adv .
 
-    plus            reduce using rule 16 (mod -> adv .)
-    minus           reduce using rule 16 (mod -> adv .)
-    star            reduce using rule 16 (mod -> adv .)
-    div             reduce using rule 16 (mod -> adv .)
-    adv             reduce using rule 16 (mod -> adv .)
-    disadv          reduce using rule 16 (mod -> adv .)
-    $end            reduce using rule 16 (mod -> adv .)
-    number          reduce using rule 16 (mod -> adv .)
-    dice            reduce using rule 16 (mod -> adv .)
+    plus            reduce using rule 18 (mod -> adv .)
+    minus           reduce using rule 18 (mod -> adv .)
+    star            reduce using rule 18 (mod -> adv .)
+    div             reduce using rule 18 (mod -> adv .)
+    adv             reduce using rule 18 (mod -> adv .)
+    disadv          reduce using rule 18 (mod -> adv .)
+    $end            reduce using rule 18 (mod -> adv .)
+    number          reduce using rule 18 (mod -> adv .)
+    dice            reduce using rule 18 (mod -> adv .)
 
 
 state 13
 
-    (17) mod -> disadv .
+    (19) mod -> disadv .
 
-    plus            reduce using rule 17 (mod -> disadv .)
-    minus           reduce using rule 17 (mod -> disadv .)
-    star            reduce using rule 17 (mod -> disadv .)
-    div             reduce using rule 17 (mod -> disadv .)
-    adv             reduce using rule 17 (mod -> disadv .)
-    disadv          reduce using rule 17 (mod -> disadv .)
-    $end            reduce using rule 17 (mod -> disadv .)
-    number          reduce using rule 17 (mod -> disadv .)
-    dice            reduce using rule 17 (mod -> disadv .)
+    plus            reduce using rule 19 (mod -> disadv .)
+    minus           reduce using rule 19 (mod -> disadv .)
+    star            reduce using rule 19 (mod -> disadv .)
+    div             reduce using rule 19 (mod -> disadv .)
+    adv             reduce using rule 19 (mod -> disadv .)
+    disadv          reduce using rule 19 (mod -> disadv .)
+    $end            reduce using rule 19 (mod -> disadv .)
+    number          reduce using rule 19 (mod -> disadv .)
+    dice            reduce using rule 19 (mod -> disadv .)
 
 
 state 14
@@ -254,25 +283,25 @@ state 14
 
 state 15
 
-    (11) mod_list -> mod mod_list .
+    (13) mod_list -> mod mod_list .
 
-    $end            reduce using rule 11 (mod_list -> mod mod_list .)
-    number          reduce using rule 11 (mod_list -> mod mod_list .)
-    dice            reduce using rule 11 (mod_list -> mod mod_list .)
+    $end            reduce using rule 13 (mod_list -> mod mod_list .)
+    number          reduce using rule 13 (mod_list -> mod mod_list .)
+    dice            reduce using rule 13 (mod_list -> mod mod_list .)
 
 
 state 16
 
     (6) roll -> number dice . mod_list
     (7) roll -> number dice .
-    (10) mod_list -> . mod
-    (11) mod_list -> . mod mod_list
-    (12) mod -> . plus number
-    (13) mod -> . minus number
-    (14) mod -> . star number
-    (15) mod -> . div number
-    (16) mod -> . adv
-    (17) mod -> . disadv
+    (12) mod_list -> . mod
+    (13) mod_list -> . mod mod_list
+    (14) mod -> . plus number
+    (15) mod -> . minus number
+    (16) mod -> . star number
+    (17) mod -> . div number
+    (18) mod -> . adv
+    (19) mod -> . disadv
 
     number          reduce using rule 7 (roll -> number dice .)
     dice            reduce using rule 7 (roll -> number dice .)
@@ -284,10 +313,19 @@ state 16
     adv             shift and go to state 12
     disadv          shift and go to state 13
 
-    mod_list                       shift and go to state 22
+    mod_list                       shift and go to state 23
     mod                            shift and go to state 5
 
 state 17
+
+    (11) roll -> number mod_list .
+
+    number          reduce using rule 11 (roll -> number mod_list .)
+    dice            reduce using rule 11 (roll -> number mod_list .)
+    $end            reduce using rule 11 (roll -> number mod_list .)
+
+
+state 18
 
     (8) roll -> dice mod_list .
 
@@ -296,67 +334,67 @@ state 17
     $end            reduce using rule 8 (roll -> dice mod_list .)
 
 
-state 18
-
-    (12) mod -> plus number .
-
-    plus            reduce using rule 12 (mod -> plus number .)
-    minus           reduce using rule 12 (mod -> plus number .)
-    star            reduce using rule 12 (mod -> plus number .)
-    div             reduce using rule 12 (mod -> plus number .)
-    adv             reduce using rule 12 (mod -> plus number .)
-    disadv          reduce using rule 12 (mod -> plus number .)
-    $end            reduce using rule 12 (mod -> plus number .)
-    number          reduce using rule 12 (mod -> plus number .)
-    dice            reduce using rule 12 (mod -> plus number .)
-
-
 state 19
 
-    (13) mod -> minus number .
+    (14) mod -> plus number .
 
-    plus            reduce using rule 13 (mod -> minus number .)
-    minus           reduce using rule 13 (mod -> minus number .)
-    star            reduce using rule 13 (mod -> minus number .)
-    div             reduce using rule 13 (mod -> minus number .)
-    adv             reduce using rule 13 (mod -> minus number .)
-    disadv          reduce using rule 13 (mod -> minus number .)
-    $end            reduce using rule 13 (mod -> minus number .)
-    number          reduce using rule 13 (mod -> minus number .)
-    dice            reduce using rule 13 (mod -> minus number .)
+    plus            reduce using rule 14 (mod -> plus number .)
+    minus           reduce using rule 14 (mod -> plus number .)
+    star            reduce using rule 14 (mod -> plus number .)
+    div             reduce using rule 14 (mod -> plus number .)
+    adv             reduce using rule 14 (mod -> plus number .)
+    disadv          reduce using rule 14 (mod -> plus number .)
+    $end            reduce using rule 14 (mod -> plus number .)
+    number          reduce using rule 14 (mod -> plus number .)
+    dice            reduce using rule 14 (mod -> plus number .)
 
 
 state 20
 
-    (14) mod -> star number .
+    (15) mod -> minus number .
 
-    plus            reduce using rule 14 (mod -> star number .)
-    minus           reduce using rule 14 (mod -> star number .)
-    star            reduce using rule 14 (mod -> star number .)
-    div             reduce using rule 14 (mod -> star number .)
-    adv             reduce using rule 14 (mod -> star number .)
-    disadv          reduce using rule 14 (mod -> star number .)
-    $end            reduce using rule 14 (mod -> star number .)
-    number          reduce using rule 14 (mod -> star number .)
-    dice            reduce using rule 14 (mod -> star number .)
+    plus            reduce using rule 15 (mod -> minus number .)
+    minus           reduce using rule 15 (mod -> minus number .)
+    star            reduce using rule 15 (mod -> minus number .)
+    div             reduce using rule 15 (mod -> minus number .)
+    adv             reduce using rule 15 (mod -> minus number .)
+    disadv          reduce using rule 15 (mod -> minus number .)
+    $end            reduce using rule 15 (mod -> minus number .)
+    number          reduce using rule 15 (mod -> minus number .)
+    dice            reduce using rule 15 (mod -> minus number .)
 
 
 state 21
 
-    (15) mod -> div number .
+    (16) mod -> star number .
 
-    plus            reduce using rule 15 (mod -> div number .)
-    minus           reduce using rule 15 (mod -> div number .)
-    star            reduce using rule 15 (mod -> div number .)
-    div             reduce using rule 15 (mod -> div number .)
-    adv             reduce using rule 15 (mod -> div number .)
-    disadv          reduce using rule 15 (mod -> div number .)
-    $end            reduce using rule 15 (mod -> div number .)
-    number          reduce using rule 15 (mod -> div number .)
-    dice            reduce using rule 15 (mod -> div number .)
+    plus            reduce using rule 16 (mod -> star number .)
+    minus           reduce using rule 16 (mod -> star number .)
+    star            reduce using rule 16 (mod -> star number .)
+    div             reduce using rule 16 (mod -> star number .)
+    adv             reduce using rule 16 (mod -> star number .)
+    disadv          reduce using rule 16 (mod -> star number .)
+    $end            reduce using rule 16 (mod -> star number .)
+    number          reduce using rule 16 (mod -> star number .)
+    dice            reduce using rule 16 (mod -> star number .)
 
 
 state 22
+
+    (17) mod -> div number .
+
+    plus            reduce using rule 17 (mod -> div number .)
+    minus           reduce using rule 17 (mod -> div number .)
+    star            reduce using rule 17 (mod -> div number .)
+    div             reduce using rule 17 (mod -> div number .)
+    adv             reduce using rule 17 (mod -> div number .)
+    disadv          reduce using rule 17 (mod -> div number .)
+    $end            reduce using rule 17 (mod -> div number .)
+    number          reduce using rule 17 (mod -> div number .)
+    dice            reduce using rule 17 (mod -> div number .)
+
+
+state 23
 
     (6) roll -> number dice mod_list .
 
@@ -364,3 +402,7 @@ state 22
     dice            reduce using rule 6 (roll -> number dice mod_list .)
     $end            reduce using rule 6 (roll -> number dice mod_list .)
 
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for dice in state 6 resolved as shift
