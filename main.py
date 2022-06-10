@@ -38,14 +38,31 @@ def handle(update, context):
     # print('currentTime: ', time.time())
     # print('mssgTime:', msg['date'].timestamp())
 
-    if chat_id not in WHITELIST or time.time() - 120 > msg['date'].timestamp():
+    if chat_id not in WHITELIST.values():# or time.time() - 120 > msg['date'].timestamp():
         return
 
-    # pprint.pprint(msg)
-    if command[:2] == '/d':
+    pprint.pprint(msg)
+    if command[:3] == '/dm':
+        print('dm roll:' + command)
+        try:
+            pipeline.execute(command[3:])
+            ans = pipeline.getString() + 'total =   ' + str(pipeline.getResult())
+            print(ans)
+            update.message.bot.sendMessage(chat_id, ans, parse_mode = 'HTML', reply_to_message_id=mssg_id)
+            update.message.bot.sendMessage(WHITELIST['main'], 'DM roll: ' + str(pipeline.getResult()), parse_mode = 'HTML')
+        except SyntacticError as e:
+            update.message.bot.sendMessage(chat_id, 'Invalid query, ' + str(e) + '\n\nType /aiuda if you need help', reply_to_message_id=mssg_id)
+        except SemanticError as e:
+            update.message.bot.sendMessage(chat_id, 'Invalid query, ' + str(e), reply_to_message_id=mssg_id)
+        except Exception as err:
+            update.message.bot.sendMessage(chat_id, 'whoops, something went wrong, check the /aiuda command if you need help', reply_to_message_id=mssg_id)
+            print(err)
+
+
+    elif command[0] == '/' and command[1] !='i' and command[1] !='s' and command[1] !='m' and command[1] !='r':
         print('query: ' + command)
         try:
-            pipeline.execute(command[2:])
+            pipeline.execute(command[1:])
             ans = pipeline.getString() + 'total =   ' + str(pipeline.getResult())
             print(ans)
             update.message.bot.sendMessage(chat_id, ans, parse_mode = 'HTML', reply_to_message_id=mssg_id)
@@ -66,6 +83,7 @@ def error(update, context):
     print('Update "%s" caused error "%s"', update, context.error)
 
 def main():
+    print('b5')
     """Start the bot."""
     token = ''
     with open('./token.txt') as f:
@@ -92,6 +110,7 @@ def main():
     # Start the Bot
     # updater.start_webhook(url_path='https://bokunodice.herokuapp.com/'+token , port=port)
     updater.start_polling()
+    print('b6')
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since

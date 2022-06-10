@@ -13,12 +13,14 @@ e.g.:    /d d20!+5 [(<u>19</u>,18)] = 24,
             /d ?+1 [(<u><b>1</b></u>, 16)] = 2
 '''
 
-WHITELIST = [
-    -533675535,
-    564213106,
-    -1001454846017,
-    -1001528382004
-]
+WHITELIST = {
+    'test' : -533675535, #undostres probando
+    'yume' : 564213106,  #yo
+    'char' : 748019688,  #char
+    'main' : -1001454846017, #bf d&d main
+    'comm' : -1001528382004  #bf d&d community
+}
+
 
 class SyntacticError(Exception):
     pass

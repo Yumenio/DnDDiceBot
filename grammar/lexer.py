@@ -13,7 +13,8 @@ _tokens = [
     'newline',
     'adv',
     'disadv',
-    'dice'
+    'dice',
+    'dmdice'
 ]
 _tokens += list(reserved.values())
 
@@ -137,6 +138,9 @@ class DiceLexer:
             t.type = reserved[t.value.lower()]
         t.col = self.find_column(t.lexer.lexdata,t) + (self.col - self.col//4)
         return t
+
+    def t_dmdice(self, t):
+        r'dm\d+'
 
     def t_eof(self, t):
         a = 0
