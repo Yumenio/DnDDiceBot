@@ -38,7 +38,11 @@ def handle(update, context):
     # print('currentTime: ', time.time())
     # print('mssgTime:', msg['date'].timestamp())
 
-    if chat_id not in WHITELIST.values():# or time.time() - 120 > msg['date'].timestamp():
+    print('actual ', time.time() - 3600 - 120)
+    print('msg', msg['date'].timestamp())
+
+    # if chat_id not in WHITELIST.values() or time.time() - 120 > msg['date'].timestamp():  #original
+    if chat_id not in WHITELIST.values() or time.time() - 3600 - 120 > msg['date'].timestamp(): #for some weird reason, time in my code atm has a 3594secs(~1hr) offset, idfk why
         return
 
     pprint.pprint(msg)
@@ -59,7 +63,10 @@ def handle(update, context):
             print(err)
 
 
-    elif command[0] == '/' and command[1] !='i' and command[1] !='s' and command[1] !='m' and command[1] !='r':
+    elif command[0] == '/':
+        if len(command) > 1 and (command[1] =='i' or command[1] =='s' or command[1] =='m' or command[1] =='r'):
+            print(command[1])
+            return
         print('query: ' + command)
         try:
             pipeline.execute(command[1:])
