@@ -17,6 +17,7 @@ WHITELIST = {
     'test' : -533675535, #undostres probando
     'yume' : 564213106,  #yo
     'char' : 748019688,  #char
+    'harbi': 635989659,  #harvid
     'main' : -1001454846017, #bf d&d main
     'comm' : -1001528382004  #bf d&d community
 }
