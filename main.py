@@ -93,9 +93,10 @@ def main():
     print('b5')
     """Start the bot."""
     # token = ''
+    # with open('./token.txt') as f:
+    #     token = f.read()
+    
     token = BOT_TOKEN
-    with open('./token.txt') as f:
-        token = f.read()
     # bot = Bot(token= token)
     # bot.setWebhook('https://bokunodice.herokuapp.com/'+token)
     updater = Updater(token)
