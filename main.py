@@ -92,7 +92,8 @@ def error(update, context):
 def main():
     print('b5')
     """Start the bot."""
-    token = ''
+    # token = ''
+    token = BOT_TOKEN
     with open('./token.txt') as f:
         token = f.read()
     # bot = Bot(token= token)
