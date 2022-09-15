@@ -92,11 +92,6 @@ def error(update, context):
 def main():
     print('b5')
     """Start the bot."""
-    # token = ''
-    # with open('./token.txt') as f:
-    #     token = f.read()
-    # print('id', os.environ['API_ID'])
-    # print('hash', os.environ['API_HASH'])
     print('token', os.environ['BOT_TOKEN'])
     token = os.environ['BOT_TOKEN']
     # bot = Bot(token= token)
