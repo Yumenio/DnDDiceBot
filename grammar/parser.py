@@ -109,23 +109,21 @@ class DiceParser:
     # Compute column.
     #   input is the input text string
     #   token is a token instance
-    #parentesis?
 
     def p_error(p):
         global errors
         def find_column(input, token):
             line_start = input.rfind('\n', 0, token.lexpos) + 1
-            return (token.lexpos - line_start) + 1  #parentesis?
+            return (token.lexpos - line_start) + 1  #parenthesis?
 
         if not p:
             errors.append(SyntacticError % (0,0,'EOF'))
             return
 
         token_column = find_column(p.lexer.lexdata, p)
-        # errors.append(_SyntacticError % (p.lineno, token_column, p.value))
+        
         _syntacticError = '(%d, %d) - SyntacticError: ERROR at or near "%s"'
         raise SyntacticError( _syntacticError % (p.lineno, token_column, p.value) )
-        # print(f'({p.lineno}, {token_column}) - SyntacticError: ERROR at or near "{p.value}"')
         
 
     parser = yacc.yacc(debug = True)
