@@ -2,8 +2,6 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
 import pprint
 from pipeline import Pipeline
-# from grammar.parser import SyntacticError
-# from grammar.executor import SemanticError
 from utils import WHITELIST, help_message, SemanticError, SyntacticError
 import time
 
@@ -30,19 +28,12 @@ def handle(update, context):
     mssg_id = msg['message_id']
     verbose = False
     pipeline = Pipeline(verbose)
-    # if msg['reply_to_message'] or msg['edit_date']:
-    # if msg['edit_date']:
-    #    return
-
-    # debugging the time
-    # print('currentTime: ', time.time())
-    # print('mssgTime:', msg['date'].timestamp())
 
     print('actual ', time.time() - 3600 - 120)
     print('msg', msg['date'].timestamp())
 
     # if chat_id not in WHITELIST.values() or time.time() - 120 > msg['date'].timestamp():  #original
-    if chat_id not in WHITELIST.values() or time.time() - 3600 - 120 > msg['date'].timestamp(): #for some weird reason, time in my code atm has a 3594secs(~1hr) offset, idfk why
+    if chat_id not in WHITELIST.values() or time.time() - 3600 - 120 > msg['date'].timestamp(): #for some weird reason, time in my code atm has a 3594secs(~1hr) offset, idk why
         return
 
     pprint.pprint(msg)
@@ -94,12 +85,9 @@ def main():
     """Start the bot."""
     print('token', os.environ['BOT_TOKEN'])
     token = os.environ['BOT_TOKEN']
-    # bot = Bot(token= token)
-    # bot.setWebhook('https://bokunodice.herokuapp.com/'+token)
+    
     updater = Updater(token)
-    # port = os.getenv('PORT', default = 8443)
-    # print('binding to port:',port)
-
+    
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
@@ -114,7 +102,6 @@ def main():
     dp.add_error_handler(error)
 
     # Start the Bot
-    # updater.start_webhook(url_path='https://bokunodice.herokuapp.com/'+token , port=port)
     updater.start_polling()
     print('b6')
 
