@@ -24,4 +24,4 @@ Type /aiuda to display the following instructions:
 
 
 
-#### Uses ply python parser, with a pretty simple grammar.
+#### Uses ply python parser, with a simple grammar.
