@@ -48,5 +48,6 @@ def handle(msg):
         return
         bot.sendMessage(chat_id, '*bold*', parse_mode = 'Markdown')
 
+
 bot = telepot.Bot(os.environ['BOT_TOKEN'])
 MessageLoop(bot, handle).run_forever()
